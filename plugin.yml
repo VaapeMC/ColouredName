@@ -1,0 +1,8 @@
+name: ColouredName
+main: me.vaape.colouredname.ColouredName
+version: 1.0
+api-version: 1.17
+depend: [Vault, LuckPerms]
+commands:
+  nickcolor:
+    description: Change the color of your nickname
