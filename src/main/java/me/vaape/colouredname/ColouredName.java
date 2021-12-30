@@ -1,8 +1,12 @@
 package me.vaape.colouredname;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import me.vaape.colouredname.gradients.Gradient;
+import me.vaape.colouredname.gradients.GradientUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -215,6 +219,28 @@ public class ColouredName extends JavaPlugin implements Listener {
                                 player.sendMessage(ChatColor.RED + "You don't have permission for that color.");
                             }
                             break;
+                        case "gradient":
+                            if(player.hasPermission("nickcolor.gradient")) {
+                                if(args.length > 2) {
+                                    String[] gradients = Arrays.copyOfRange(args, 1, args.length);
+
+                                    boolean validHex = Arrays.stream(gradients).allMatch(ColouredName::isHex);
+
+                                    if(!validHex) {
+                                        player.sendMessage(ChatColor.RED + "Invalid Hex value, use the format #FFFFFF");
+                                        return true;
+                                    }
+
+                                    String hello = "Hello there, how are you doing?";
+                                    Gradient gradient = new Gradient();
+                                    gradient.setGradientSize(hello.length() + 3);
+                                    gradient.setColors(Arrays.asList(gradients));
+                                    List<String> hexGradients = gradient.getArray();
+
+                                    player.sendMessage(GradientUtils.gradientifyString(hello, hexGradients));
+                                    return true;
+                                }
+                            }
                         default:
                             player.sendMessage(ChatColor.RED + "Couldn't find nickcolor " + args[0] + ". Try " + "\n" + ChatColor.of("#ff0000") +
                                                        "H" + ChatColor.of("#00ff37") + "e" + ChatColor.of("#005eff") + "x" + ChatColor.of("#c4c4c4") + "\n" +
