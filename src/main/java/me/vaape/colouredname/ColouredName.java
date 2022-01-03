@@ -231,12 +231,13 @@ public class ColouredName extends JavaPlugin implements Listener {
                                         return true;
                                     }
 
+                                    String nick = ChatColor.stripColor(player.getDisplayName());
                                     Gradient gradient = new Gradient();
-                                    gradient.setGradientSize(player.getName().length() + 3);
+                                    gradient.setGradientSize(nick.length() + 3);
                                     gradient.setColors(Arrays.asList(gradients));
                                     List<String> hexGradients = gradient.getArray();
 
-                                    player.setDisplayName(GradientUtils.gradientifyString(player.getName(), hexGradients) + "§f");
+                                    player.setDisplayName(GradientUtils.gradientifyString(nick, hexGradients) + "§f");
                                     return true;
                                 }
                             }
