@@ -231,13 +231,12 @@ public class ColouredName extends JavaPlugin implements Listener {
                                         return true;
                                     }
 
-                                    String hello = "Hello there, how are you doing?";
                                     Gradient gradient = new Gradient();
-                                    gradient.setGradientSize(hello.length() + 3);
+                                    gradient.setGradientSize(player.getName().length() + 3);
                                     gradient.setColors(Arrays.asList(gradients));
                                     List<String> hexGradients = gradient.getArray();
 
-                                    player.sendMessage(GradientUtils.gradientifyString(hello, hexGradients));
+                                    player.setDisplayName(GradientUtils.gradientifyString(player.getName(), hexGradients) + "§f");
                                     return true;
                                 }
                             }

@@ -8,7 +8,6 @@ public class GradientUtils {
     public static String gradientifyString(String string, List<String> gradients) {
         StringBuilder msg = new StringBuilder();
         for(int i = 0; i < string.length(); i++) {
-            System.out.println("i=" + i);
             msg.append(ChatColor.of(gradients.get(i))).append(string.charAt(i));
         }
 
