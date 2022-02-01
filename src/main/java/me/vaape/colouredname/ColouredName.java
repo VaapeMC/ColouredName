@@ -15,12 +15,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.md_5.bungee.api.ChatColor;
-import net.milkbowl.vault.permission.Permission;
 
 public class ColouredName extends JavaPlugin implements Listener {
 
     public static ColouredName plugin;
-    private static Permission perms = null;
 
     public void onEnable() {
         plugin = this;
@@ -30,10 +28,6 @@ public class ColouredName extends JavaPlugin implements Listener {
 
     public void onDisable() {
         plugin = null;
-    }
-
-    public static ColouredName getInstance() {
-        return plugin;
     }
 
     //nickcolor
@@ -206,8 +200,12 @@ public class ColouredName extends JavaPlugin implements Listener {
                                 if (args.length > 1) {
 
                                     if (isHex(args[1])) {
-                                        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " meta removeprefix 1000");
-                                        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " meta addprefix 1000 &" + args[1]);
+                                        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),
+                                                                           "lp user " + player.getName() + " meta " +
+                                                                                   "removeprefix 1000");
+                                        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),
+                                                                           "lp user " + player.getName() + " meta " +
+                                                                                   "addprefix 1000 &" + args[1]);
                                         player.sendMessage(ChatColor.GREEN + "Name color changed.");
                                     } else {
                                         player.sendMessage(ChatColor.RED + "Invalid Hex value, use the format #FFFFFF");
@@ -220,13 +218,13 @@ public class ColouredName extends JavaPlugin implements Listener {
                             }
                             break;
                         case "gradient":
-                            if(player.hasPermission("nickcolor.gradient")) {
-                                if(args.length > 2) {
+                            if (player.hasPermission("nickcolor.gradient")) {
+                                if (args.length > 2) {
                                     String[] gradients = Arrays.copyOfRange(args, 1, args.length);
 
                                     boolean validHex = Arrays.stream(gradients).allMatch(ColouredName::isHex);
 
-                                    if(!validHex) {
+                                    if (!validHex) {
                                         player.sendMessage(ChatColor.RED + "Invalid Hex value, use the format #FFFFFF");
                                         return true;
                                     }
@@ -237,7 +235,8 @@ public class ColouredName extends JavaPlugin implements Listener {
                                     gradient.setColors(Arrays.asList(gradients));
                                     List<String> hexGradients = gradient.getArray();
 
-                                    player.setDisplayName(GradientUtils.gradientifyString(nick, hexGradients) + "§f");
+                                    getServer().dispatchCommand(Bukkit.getConsoleSender(),
+                                                                "nick " + player.getName() + " " + GradientUtils.gradientifyString(nick, hexGradients) + "§f");
                                     return true;
                                 }
                             }
